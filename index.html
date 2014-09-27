@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Image Filters</title>
+        <meta charset="utf-8" />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+
+    <body>
+        <div id="image-wrapper">
+            <canvas id="image-canvas" width="660" height="440"></canvas>
+            <img alt="Nature" src="images/nature.jpg" />
+
+            <div id="footer">
+                <span>Filters:</span>
+                <a href="#" id="grayscale" class="button">Grayscale</a>
+                <a href="#" id="brighten" class="button">Brighten</a>
+                <a href="#" id="threshold" class="button">Threshold</a>
+                <a href="#" id="reset" class="button">Reset</a>
+            </div>
+        </div>
+
+        <div id="comments">
+            <h2>Comments</h2>
+
+            <form action="http://localhost:3200/comments">
+                <input type="text" name="name" placeholder="Name" />
+                <textarea name="message" rows="8" cols="5" placeholder="Comment on this photo..."></textarea>
+                <input type="submit" value="Add your comment" />
+            </form>
+
+            <ul id="comment-list"></ul>
+        </div>
+
+        <script type="text/template" id="comment-template">
+          <li>
+            <p><strong>{{ name }}:</strong> {{ message }}</p>
+          </li>
+        </script>
+
+        <!-- JS -->
+        <script src="js/handlebars.min.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>
