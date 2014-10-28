@@ -30,18 +30,20 @@
 
         // add comment via AJAX
         var request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', function(event) {
-            if (this.readyState === REQUEST_DONE && this.status === STATUS_OK) {
+        request.addEventListener('load', function(event) {
+            if (request.status === STATUS_OK) {
                 addCommentToList(name, message);
                 nameInput.value = '';
                 messageTextarea.value = '';
             }
         });
 
-        request.open('POST', commentForm.getAttribute('action'), true);
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.send('name=' + encodeURIComponent(name) + '&message=' +
-          encodeURIComponent(message));
+        request.open('POST', 'http://localhost:3200/comments', true);
+        request.setRequestHeader('Content-type', 'application/json');
+        request.send(JSON.stringify({
+          name: name,
+          message: message
+        }));
     });
 
     var lastResponse = null;
@@ -49,11 +51,10 @@
     (function refreshComments() {
         // get comments via AJAX
         var request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', function(event) {
-            if (this.readyState === REQUEST_DONE && this.status === STATUS_OK &&
-                    this.responseText !== lastResponse) {
-                var comments = JSON.parse(this.responseText);
-                lastResponse = this.responseText;
+        request.addEventListener('load', function(event) {
+            if (request.status === STATUS_OK) {
+                var comments = JSON.parse(request.responseText);
+                lastResponse = request.responseText;
 
                 commentList.innerHTML = '';
                 comments.forEach(function(comment) {
